@@ -55,6 +55,7 @@ export interface Response {
   }
   
 export interface Candidate {
+    login: string;
     id: number;
     img: string;
     name: string;

@@ -144,6 +144,7 @@ const SavedCandidates = () => {
                   .filter((filter) => filter.meta.toLowerCase().includes(search.toLowerCase()))
                   .map((candidate, index) => (
                     <CandidateRow
+                      login={candidate.login}
                       id={candidate.id}
                       key={candidate.name || '' + index}
                       bio={candidate.bio}
@@ -157,6 +158,7 @@ const SavedCandidates = () => {
                   ))
               : candidates.map((candidate, index) => (
                   <CandidateRow
+                    login={candidate.login}
                     id={candidate.id}
                     key={candidate.name || '' + index}
                     bio={candidate.bio}

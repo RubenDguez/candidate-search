@@ -31,6 +31,7 @@ const CandidateSearch = () => {
       }
 
       setCandidate({
+        login: user.login,
         id: user.id,
         bio: user.bio || '',
         company: user.company || '',
@@ -124,10 +125,10 @@ const CandidateSearch = () => {
   );
 };
 
-const CandidateDetails = ({ name, location, email, company, bio }: Candidate) => {
+const CandidateDetails = ({ name, location, email, company, bio, login }: Candidate) => {
   return (
     <>
-      {!name ? <p>Name:</p> : <h3>{name}</h3>}
+      {<h3>{name} <span style={{ fontStyle: 'oblique' }}>({login})</span></h3>}
 
       <p>
         <span>Location: </span>
