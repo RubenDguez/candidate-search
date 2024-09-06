@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { IoMdRemoveCircle } from 'react-icons/io';
-import { Candidate } from './CandidateSearch';
+import { Candidate } from '../interfaces/Candidate.interface';
 
 type SortBy = 'name' | 'location' | 'email' | 'company' | 'bio';
 

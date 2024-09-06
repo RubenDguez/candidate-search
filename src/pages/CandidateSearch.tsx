@@ -1,4 +1,3 @@
-// import { useState, useEffect } from 'react';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { searchGithub, searchGithubUser } from '../api/API';
 
