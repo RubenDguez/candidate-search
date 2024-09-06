@@ -55,6 +55,7 @@ export interface Response {
   }
   
 export interface Candidate {
+    html_url: string;
     login: string;
     id: number;
     img: string;

@@ -31,12 +31,15 @@ const SavedCandidates = () => {
    * @return {void}
    * @description Change the active sorting column classes
    */
-  const handleActiveSorting = useCallback((by: SortBy) => {
-    [nameRef, locationRef, emailRef, companyRef, bioRef].forEach((ref) => {
-      ref.current?.classList.remove('sort-active', 'ascending', 'descending');
-      if (ref.current?.id === by) ref.current.classList.add('sort-active', asc ? 'ascending' : 'descending');
-    });
-  }, [asc]);
+  const handleActiveSorting = useCallback(
+    (by: SortBy) => {
+      [nameRef, locationRef, emailRef, companyRef, bioRef].forEach((ref) => {
+        ref.current?.classList.remove('sort-active', 'ascending', 'descending');
+        if (ref.current?.id === by) ref.current.classList.add('sort-active', asc ? 'ascending' : 'descending');
+      });
+    },
+    [asc],
+  );
 
   /**
    * Handle Sort Candidates
@@ -94,7 +97,7 @@ const SavedCandidates = () => {
     <>
       <h1>Potential Candidates</h1>
       <div className="potential-candidate">
-      <p className="table-notes">Table sortable and searchable by: Name, Location, Email, Company and Bio</p>
+        <p className="table-notes">Table sortable and searchable by: Name, Location, Email, Company and Bio</p>
         <input
           onChange={(e) => {
             setSearch(e.target.value);
@@ -144,6 +147,7 @@ const SavedCandidates = () => {
                   .filter((filter) => filter.meta.toLowerCase().includes(search.toLowerCase()))
                   .map((candidate, index) => (
                     <CandidateRow
+                      html_url={candidate.html_url}
                       login={candidate.login}
                       id={candidate.id}
                       key={candidate.name || '' + index}
@@ -158,6 +162,7 @@ const SavedCandidates = () => {
                   ))
               : candidates.map((candidate, index) => (
                   <CandidateRow
+                    html_url={candidate.html_url}
                     login={candidate.login}
                     id={candidate.id}
                     key={candidate.name || '' + index}

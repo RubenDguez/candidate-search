@@ -31,6 +31,7 @@ const CandidateSearch = () => {
       }
 
       setCandidate({
+        html_url: user.html_url,
         login: user.login,
         id: user.id,
         bio: user.bio || '',
@@ -125,7 +126,7 @@ const CandidateSearch = () => {
   );
 };
 
-const CandidateDetails = ({ name, location, email, company, bio, login }: Candidate) => {
+const CandidateDetails = ({ name, location, email, company, bio, login, html_url }: Candidate) => {
   return (
     <>
       {<h3>{name} <span style={{ fontStyle: 'oblique' }}>({login})</span></h3>}
@@ -136,11 +137,15 @@ const CandidateDetails = ({ name, location, email, company, bio, login }: Candid
       </p>
       <p>
         <span>Email: </span>
-        <span>{email}</span>
+        <a href={`mailto: ${email}`}>{email}</a>
       </p>
       <p>
         <span>Company: </span>
         <span>{company}</span>
+      </p>
+      <p>
+        <span>Url: </span>
+        <a href={html_url} target='_blank'>{html_url}</a>
       </p>
       <p>
         <span>Bio: </span>
