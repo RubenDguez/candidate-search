@@ -209,6 +209,18 @@ tbody tr:nth-child(odd) {
   color: lime;
 }
 
+.refresh-button {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  border-radius: 50%;
+  color: green;
+}
+
+.refresh-button:hover {
+  color: lime;
+}
+
 .potential-candidate {
   display: flex;
   flex-direction: column;

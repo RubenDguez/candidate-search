@@ -1,20 +1,25 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { searchGithub, searchGithubUser } from '../api/API';
 
-import { IoMdRemoveCircle } from 'react-icons/io';
-import { IoAddCircleSharp } from 'react-icons/io5';
 import { FaPlay } from 'react-icons/fa';
+import { IoMdRefresh, IoMdRemoveCircle } from 'react-icons/io';
+import { IoAddCircleSharp } from 'react-icons/io5';
+import { useNavigate } from 'react-router-dom';
 import { Candidate, GithubUser, Response } from '../interfaces/Candidate.interface';
-
 
 const CandidateSearch = () => {
   const [response, setResponse] = useState<Array<Response>>([]);
   const [responseId, setResponseId] = useState(0);
   const [candidate, setCandidate] = useState<Candidate | null>();
   const [savedCandidates, setSavedCandidates] = useState<Array<Candidate>>([]);
+  const navigate = useNavigate();
 
   const handleButtonClick = () => {
     setResponseId((candidate) => candidate + 1);
+  };
+
+  const handleRefreshPage = () => {
+    navigate(0);
   };
 
   const hasNext = useMemo(() => {
@@ -31,6 +36,8 @@ const CandidateSearch = () => {
       }
 
       setCandidate({
+        html_url: user.html_url,
+        login: user.login,
         id: user.id,
         bio: user.bio || '',
         company: user.company || '',
@@ -38,7 +45,7 @@ const CandidateSearch = () => {
         img: user.avatar_url,
         location: user.location || '',
         name: user.name || '',
-        meta: `*${user.name?.toLowerCase()}*${user.location?.toLowerCase()}*${user.email?.toLowerCase()}*${user.company?.toLowerCase()}*${user.bio?.toLowerCase()}*`,
+        meta: `*${user.name?.toLowerCase()}*${user.login.toLowerCase()}*${user.location?.toLowerCase()}*${user.email?.toLowerCase()}*${user.html_url.toLowerCase()}*${user.company?.toLowerCase()}*${user.bio?.toLowerCase()}*`,
       });
     }
   }, [response, responseId, hasNext]);
@@ -83,6 +90,11 @@ const CandidateSearch = () => {
       <>
         <h2>No more candidates to display</h2>
         <p>Please refresh the page to load more candidates.</p>
+        <div>
+          <div onClick={() => handleRefreshPage()}>
+            <IoMdRefresh className='button refresh-button' />
+          </div>
+        </div>
       </>
     );
   }
@@ -100,7 +112,10 @@ const CandidateSearch = () => {
           {candidate !== null ? (
             <CandidateDetails {...candidate} />
           ) : (
-            <div style={{ padding: '2rem' }}>This is not on us, the candidate with url: <span style={{ color: 'blue' }}>https://api.github.com/users/{response[responseId].login}</span> was not found and GitHub returned an empty user, please continue...</div>
+            <div style={{ padding: '2rem' }}>
+              This is not on us, the candidate with url: <span style={{ color: 'blue' }}>https://api.github.com/users/{response[responseId].login}</span> was not found and GitHub
+              returned an empty user, please continue...
+            </div>
           )}
         </div>
         <div className="candidate-buttons">
@@ -124,10 +139,14 @@ const CandidateSearch = () => {
   );
 };
 
-const CandidateDetails = ({ name, location, email, company, bio }: Candidate) => {
+const CandidateDetails = ({ name, location, email, company, bio, login, html_url }: Candidate) => {
   return (
     <>
-      {!name ? <p>Name:</p> : <h3>{name}</h3>}
+      {
+        <h3>
+          {name} <span style={{ fontStyle: 'oblique' }}>({login})</span>
+        </h3>
+      }
 
       <p>
         <span>Location: </span>
@@ -135,11 +154,17 @@ const CandidateDetails = ({ name, location, email, company, bio }: Candidate) =>
       </p>
       <p>
         <span>Email: </span>
-        <span>{email}</span>
+        <a href={`mailto: ${email}`}>{email}</a>
       </p>
       <p>
         <span>Company: </span>
         <span>{company}</span>
+      </p>
+      <p>
+        <span>Url: </span>
+        <a href={html_url} target="_blank">
+          {html_url}
+        </a>
       </p>
       <p>
         <span>Bio: </span>
