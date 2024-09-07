@@ -45,7 +45,7 @@ const CandidateSearch = () => {
         img: user.avatar_url,
         location: user.location || '',
         name: user.name || '',
-        meta: `*${user.name?.toLowerCase()}*${user.location?.toLowerCase()}*${user.email?.toLowerCase()}*${user.company?.toLowerCase()}*${user.bio?.toLowerCase()}*`,
+        meta: `*${user.name?.toLowerCase()}*${user.login.toLowerCase()}*${user.location?.toLowerCase()}*${user.email?.toLowerCase()}*${user.html_url.toLowerCase()}*${user.company?.toLowerCase()}*${user.bio?.toLowerCase()}*`,
       });
     }
   }, [response, responseId, hasNext]);
