@@ -90,7 +90,7 @@ const SavedCandidates = () => {
   if (candidates.length === 0) {
     return (
       <>
-        <h2>No candidates found...</h2>
+        <h2>No candidates have been accepted...</h2>
       </>
     );
   }
